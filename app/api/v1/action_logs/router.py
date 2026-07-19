@@ -1,3 +1,4 @@
+from core.security import require_admin
 from api.v1.action_logs.service import ActionLogService
 from api.v1.action_logs.repository import ActionLogRepository
 from sqlalchemy.orm import Session
@@ -15,6 +16,7 @@ def action_log_service(db: Session = Depends(get_db)):
 def get_action_logs(
     offset: int = 0, 
     limit: int = 10, 
-    action_log_service: ActionLogService = Depends(action_log_service)
+    action_log_service: ActionLogService = Depends(action_log_service),
+    _: dict = Depends(require_admin)
 ):
     return action_log_service.get_action_logs(offset, limit)

@@ -1,3 +1,4 @@
+from core.security import require_admin
 from typing import List
 from .service import StatusDeviceService
 from .repository import StatusDeviceRepository
@@ -17,9 +18,17 @@ def get_all_status_device(status_device_service: StatusDeviceService = Depends(s
     return status_device_service.get_all_status_device()
 
 @router.post('/', response_model=PublicStatusDevice)
-def create_status_device(status_device_dto: CreateStatusDeviceDTO, status_device_service: StatusDeviceService = Depends(status_device_service)):
+def create_status_device(
+    status_device_dto: CreateStatusDeviceDTO, 
+    status_device_service: StatusDeviceService = Depends(status_device_service),
+    _: dict = Depends(require_admin)
+):
     return status_device_service.create_status_device(status_device_dto)
 
 @router.delete('/{status_device_id}', response_model=PublicStatusDevice)
-def delete_status_device(status_device_id: int, status_device_service: StatusDeviceService = Depends(status_device_service)):
+def delete_status_device(
+    status_device_id: int, 
+    status_device_service: StatusDeviceService = Depends(status_device_service),
+    _: dict = Depends(require_admin)
+):
     return status_device_service.delete_status_device(status_device_id)

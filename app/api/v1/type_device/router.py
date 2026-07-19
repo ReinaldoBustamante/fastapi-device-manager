@@ -1,3 +1,4 @@
+from core.security import require_admin
 from typing import List
 from core.db import get_db
 from sqlalchemy.orm import Session
@@ -19,9 +20,17 @@ def get_all_type_device(type_device_service: TypeDeviceService = Depends(type_de
     return type_device_service.get_all_type_device()
 
 @router.post('/', response_model=PublicTypeDevice)
-def create_type_device(type_device_dto: CreateTypeDeviceDTO, type_device_service: TypeDeviceService = Depends(type_device_service)):
+def create_type_device(
+    type_device_dto: CreateTypeDeviceDTO, 
+    type_device_service: TypeDeviceService = Depends(type_device_service),
+    _: dict = Depends(require_admin)
+):
     return type_device_service.create_type_device(type_device_dto)
 
 @router.delete('/{type_device_id}', response_model=PublicTypeDevice)
-def delete_type_device(type_device_id: int, type_device_service: TypeDeviceService = Depends(type_device_service)):
+def delete_type_device(
+    type_device_id: int, 
+    type_device_service: TypeDeviceService = Depends(type_device_service),
+    _: dict = Depends(require_admin)
+):
     return type_device_service.delete_type_device(type_device_id)

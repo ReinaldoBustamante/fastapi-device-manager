@@ -1,3 +1,4 @@
+from core.security import require_admin
 from api.v1.actions.schemas import CreateActionDTO, ActionResponse
 from api.v1.actions.service import ActionService
 from api.v1.actions.repository import ActionRepository
@@ -17,9 +18,17 @@ def get_all_actions(action_service: ActionService = Depends(action_service)):
     return action_service.get_all_actions()
 
 @router.post('/', response_model=ActionResponse)
-def create_action(action: CreateActionDTO, action_service: ActionService = Depends(action_service)):
+def create_action(
+    action: CreateActionDTO, 
+    action_service: ActionService = Depends(action_service), 
+    _: dict = Depends(require_admin)
+):
     return action_service.create_action(action)
 
 @router.delete('/{action_id}', response_model=ActionResponse)
-def delete_action(action_id: int, action_service: ActionService = Depends(action_service)):
+def delete_action(
+    action_id: int, 
+    action_service: ActionService = Depends(action_service),
+    _: dict = Depends(require_admin)
+):
     return action_service.delete_action(action_id)
