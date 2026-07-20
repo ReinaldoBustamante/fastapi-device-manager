@@ -1,3 +1,4 @@
+from sqlalchemy.orm import selectinload
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 from models import Device
@@ -27,6 +28,23 @@ class DeviceRepository:
         stmt = select(Device).where(Device.id == device_id)
         result = self.db.scalars(stmt).first()
         return result
+
+    def get_device_resume(self, limit:int, offset:int):
+        stmt = select(Device).options(selectinload(Device.user), selectinload(Device.type), selectinload(Device.status)).limit(limit).offset(offset)
+        devices = self.db.scalars(stmt).all()
+        
+        total = self.db.scalar(
+            select(func.count()).select_from(Device)
+        )
+        
+        return {
+            "devices": devices,
+            "pagination": {
+                "total": total,
+                "offset": offset,
+                "limit": limit
+            }
+        }
 
     def create_device(self, device: Device):
         self.db.add(device)

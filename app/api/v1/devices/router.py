@@ -1,3 +1,4 @@
+from api.v1.devices.schemas import DeviceResumeListResponse
 from api.v1.users.repository import UserRepository
 from api.v1.devices.schemas import AssignDeviceDTO
 from api.v1.action_logs.repository import ActionLogRepository
@@ -25,6 +26,10 @@ router = APIRouter()
 def get_all_device(limit: int = 10, offset: int = 0, device_service: DeviceService = Depends(device_service)):
     return device_service.get_all_device(limit, offset)
 
+@router.get('/resume', response_model=DeviceResumeListResponse)
+def get_device_resume(limit: int = 10, offset: int = 0, device_service: DeviceService = Depends(device_service)):
+    return device_service.get_device_resume(limit, offset)
+
 @router.post('/', response_model=DeviceResponse)
 def create_device(create_device_dto: CreateDeviceDTO, device_service: DeviceService = Depends(device_service), current_user = Depends(require_admin)):
     return device_service.create_device(create_device_dto, current_user)
@@ -46,3 +51,4 @@ def assign_device(
     current_user = Depends(require_admin)
 ):
     return device_service.assign_device(device_id, assign_device_dto, current_user)
+

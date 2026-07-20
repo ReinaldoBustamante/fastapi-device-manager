@@ -1,3 +1,4 @@
+from api.v1.users.schemas import PublicUserDevices
 from api.v1.users.service import UserService
 from api.v1.users.repository import UserRepository
 from core.db import get_db
@@ -26,7 +27,7 @@ def get_user(
 ):
     return user_service.get_user_by_id(user_id)
 
-@router.get('/{user_id}/devices')
+@router.get('/{user_id}/devices', response_model=list[PublicUserDevices])
 def get_user_devices(
     user_id: int,
     user_service: UserService = Depends(user_service)

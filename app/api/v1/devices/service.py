@@ -27,7 +27,10 @@ class DeviceService:
     
     def get_all_device(self, limit: int, offset: int):
         return self.device_repository.get_all_device(limit, offset)
-    
+
+    def get_device_resume(self, limit: int, offset: int):
+        return self.device_repository.get_device_resume(limit, offset)
+
     def create_device(self, create_device_dto: CreateDeviceDTO, current_user):
         device_exist = self.device_repository.get_device_by_serial_number(create_device_dto.serial_number)
         if device_exist:

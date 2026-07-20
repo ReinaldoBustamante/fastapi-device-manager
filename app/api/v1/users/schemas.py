@@ -27,3 +27,12 @@ class PaginationResponse(BaseModel):
 class PaginatedUserResponse(BaseModel):
     users: List[UserResponse]
     pagination: PaginationResponse
+
+class PublicUserDevices(BaseModel):
+    id: int
+    serial_number: str
+    brand: str
+    model: str
+    type_id: int
+    status_id: int
+    model_config = ConfigDict(from_attributes=True)
