@@ -1,3 +1,4 @@
+from core.middleware import register_middleware
 from fastapi import FastAPI
 from core.db import engine, Base
 from api.v1.roles.router import router as role_router
@@ -12,6 +13,8 @@ from api.v1.action_logs.router import router as action_log_router
 def create_app():
     app = FastAPI()
     Base.metadata.create_all(bind=engine)
+
+    register_middleware(app)
     app.include_router(auth_router, prefix="/api/v1/auth", tags=["Auth"])
     app.include_router(action_router, prefix="/api/v1/actions", tags=["Actions"])
     app.include_router(role_router, prefix="/api/v1/roles", tags=["Roles"])
