@@ -10,6 +10,7 @@ from api.v1.status_device.router import router as status_device_router
 from api.v1.devices.router import router as device_router
 from api.v1.action_logs.router import router as action_log_router
 
+
 def create_app():
     app = FastAPI()
     Base.metadata.create_all(bind=engine)
