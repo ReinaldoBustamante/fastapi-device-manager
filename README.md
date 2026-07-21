@@ -55,7 +55,7 @@ Copia el archivo de plantilla `.env.template` como `.env`:
 cp .env.template .env
 ```
 Abre el archivo `.env` y define los valores necesarios, por ejemplo:
-*   `DATABASE_URL=postgresql://test:test@localhost:5432/postgres`
+*   `DATABASE_URL=postgresql+psycopg://test:test@localhost:5432/postgres`
 *   `SECRET_KEY` (Clave secreta segura para firmar los tokens JWT)
 *   Datos por defecto del administrador (`DEFAULT_ADMIN_EMAIL`, `DEFAULT_ADMIN_PASSWORD`, etc.)
 ### 3. Levantar la Base de Datos (PostgreSQL) con Docker
