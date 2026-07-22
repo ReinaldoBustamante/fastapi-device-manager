@@ -83,7 +83,7 @@ alembic upgrade head
 ### 6. Ejecutar las Semillas (*Seeds*)
 Inserta los datos iniciales obligatorios y el usuario administrador en la base de datos:
 ```bash
-python -m seeds
+python -m app.seeds
 ```
 
 ## Ejecucion de la aplicación
