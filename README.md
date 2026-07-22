@@ -76,7 +76,11 @@ source .venv/bin/activate
 # Instalar dependencias
 pip install -r requirements.txt
 ```
-### 5. Ejecutar las Semillas (*Seeds*)
+### 5. Ejecutar las migraciones con alembic
+```bash
+alembic upgrade head
+```
+### 6. Ejecutar las Semillas (*Seeds*)
 Inserta los datos iniciales obligatorios y el usuario administrador en la base de datos:
 ```bash
 python -m seeds
