@@ -1,12 +1,12 @@
-from utils.password import hash_password
-from api.v1.roles.repository import RoleRepository
+from app.utils.password import hash_password
+from app.api.v1.roles.repository import RoleRepository
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import Depends, HTTPException
-from utils.password import verify_password
-from core.security import create_token
+from app.utils.password import verify_password
+from app.core.security import create_token
 from .repository import AuthRepository
 from .schemas import CreateUserDTO
-from models import User
+from app.models import User
 
 class AuthService:
     def __init__(self, auth_repository: AuthRepository, role_repository: RoleRepository):

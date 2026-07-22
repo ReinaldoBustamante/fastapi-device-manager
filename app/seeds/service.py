@@ -1,10 +1,10 @@
-from models import Role, StatusDevice, TypeDevice, Action, User
-from sqlalchemy import select
+from app.models import Role, StatusDevice, TypeDevice, Action, User
+from app.core.enums import RoleType
+from app.utils.password import hash_password 
 from .data import ROLES, STATUS, TYPE_DEVICE, ACTIONS
+from sqlalchemy import select
 from sqlalchemy.orm import Session
-from core.enums import RoleType
 from dotenv import load_dotenv
-from utils.password import hash_password 
 import os
 
 load_dotenv()

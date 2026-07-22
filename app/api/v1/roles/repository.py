@@ -1,7 +1,7 @@
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from models import Role
+from app.models import Role
 
 class RoleRepository:
     def __init__(self, db: Session):

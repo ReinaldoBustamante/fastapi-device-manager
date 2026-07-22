@@ -3,7 +3,7 @@
 from fastapi import HTTPException
 from .repository import RoleRepository
 from .schemes import CreateRoleDTO
-from models import Role
+from app.models import Role
 
 class RoleServices:
     def __init__(self, role_repository: RoleRepository):

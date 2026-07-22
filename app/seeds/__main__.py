@@ -1,4 +1,4 @@
-from core.db import SessionLocal
+from app.core.db import SessionLocal
 from .service import seed_roles, seed_status, seed_type_device, seed_actions, seed_user
 
 def run():

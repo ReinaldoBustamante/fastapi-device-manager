@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from models import StatusDevice
+from app.models import StatusDevice
 
 class StatusDeviceRepository:
     def __init__(self, db: Session):

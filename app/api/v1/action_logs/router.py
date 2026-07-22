@@ -1,9 +1,9 @@
-from core.security import require_admin
-from api.v1.action_logs.service import ActionLogService
-from api.v1.action_logs.repository import ActionLogRepository
+from app.core.security import require_admin
+from app.api.v1.action_logs.service import ActionLogService
+from app.api.v1.action_logs.repository import ActionLogRepository
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
-from core.db import get_db
+from app.core.db import get_db
 
 router = APIRouter()
 

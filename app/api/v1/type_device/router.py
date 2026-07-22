@@ -1,6 +1,6 @@
-from core.security import require_admin
+from app.core.security import require_admin
 from typing import List
-from core.db import get_db
+from app.core.db import get_db
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
 from .schemas import CreateTypeDeviceDTO, PublicTypeDevice

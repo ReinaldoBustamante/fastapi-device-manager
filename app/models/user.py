@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING, List
-from sqlalchemy import Integer, String, Date, Boolean, DateTime, ForeignKey
+from sqlalchemy import Integer, String, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import datetime, date, timezone
-from core.db import Base
+from datetime import datetime, timezone
+from app.core.db import Base
 
 if TYPE_CHECKING:
     from .role import Role

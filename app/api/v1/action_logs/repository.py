@@ -1,6 +1,6 @@
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
-from models import ActionLogs
+from app.models import ActionLogs
 
 class ActionLogRepository:
     def __init__(self, db: Session):

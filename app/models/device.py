@@ -1,10 +1,9 @@
 from typing import Optional
-from core.db import Base
+from app.core.db import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, DateTime, Date, ForeignKey
 from datetime import datetime, date, timezone
 from typing import TYPE_CHECKING, List
-from .user_device import user_device
 
 if TYPE_CHECKING:
     from .status_device import StatusDevice

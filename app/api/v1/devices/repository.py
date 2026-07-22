@@ -1,7 +1,7 @@
 from sqlalchemy.orm import selectinload
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session
-from models import Device
+from app.models import Device
 
 class DeviceRepository:
     def __init__(self, db: Session):

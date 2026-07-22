@@ -1,10 +1,9 @@
-from api.v1.users.schemas import PublicUserDevices
-from api.v1.users.service import UserService
-from api.v1.users.repository import UserRepository
-from core.db import get_db
+from app.api.v1.users.schemas import PublicUserDevices, UserResponse, PaginatedUserResponse
+from app.api.v1.users.service import UserService
+from app.api.v1.users.repository import UserRepository
+from app.core.db import get_db
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
-from .schemas import UserResponse, PaginatedUserResponse
 
 router = APIRouter()
 

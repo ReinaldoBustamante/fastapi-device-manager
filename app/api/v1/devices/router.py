@@ -1,16 +1,16 @@
-from api.v1.devices.schemas import DeviceResumeListResponse
-from api.v1.users.repository import UserRepository
-from api.v1.devices.schemas import AssignDeviceDTO
-from api.v1.action_logs.repository import ActionLogRepository
+from app.api.v1.devices.schemas import DeviceResumeListResponse
+from app.api.v1.users.repository import UserRepository
+from app.api.v1.devices.schemas import AssignDeviceDTO
+from app.api.v1.action_logs.repository import ActionLogRepository
 from .schemas import CreateDeviceDTO, DeviceResponse, UpdateStatusDeviceDTO
 from .service import DeviceService
 from .repository import DeviceRepository
-from core.db import get_db
+from app.core.db import get_db
 from sqlalchemy.orm import Session
 from fastapi import Depends, APIRouter
-from api.v1.type_device.repository import TypeDeviceRepository
-from api.v1.status_device.repository import StatusDeviceRepository
-from core.security import require_admin
+from app.api.v1.type_device.repository import TypeDeviceRepository
+from app.api.v1.status_device.repository import StatusDeviceRepository
+from app.core.security import require_admin
 
 def device_service(db: Session = Depends(get_db)):
     device_repository = DeviceRepository(db)

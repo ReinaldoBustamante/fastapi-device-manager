@@ -1,10 +1,10 @@
-from core.security import require_admin
-from api.v1.actions.schemas import CreateActionDTO, ActionResponse
-from api.v1.actions.service import ActionService
-from api.v1.actions.repository import ActionRepository
+from app.core.security import require_admin
+from app.api.v1.actions.schemas import CreateActionDTO, ActionResponse
+from app.api.v1.actions.service import ActionService
+from app.api.v1.actions.repository import ActionRepository
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
-from core.db import get_db
+from app.core.db import get_db
 from typing import List
 
 router = APIRouter()

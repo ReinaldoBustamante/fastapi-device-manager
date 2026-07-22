@@ -1,19 +1,19 @@
-from core.middleware import register_middleware
 from fastapi import FastAPI
-from core.db import engine, Base
-from api.v1.roles.router import router as role_router
-from api.v1.auth.router import router as auth_router
-from api.v1.users.router import router as user_router
-from api.v1.actions.router import router as action_router
-from api.v1.type_device.router import router as type_device_router
-from api.v1.status_device.router import router as status_device_router
-from api.v1.devices.router import router as device_router
-from api.v1.action_logs.router import router as action_log_router
+from app.core.middleware import register_middleware
+from app.core.db import engine, Base
+from app.api.v1.roles.router import router as role_router
+from app.api.v1.auth.router import router as auth_router
+from app.api.v1.users.router import router as user_router
+from app.api.v1.actions.router import router as action_router
+from app.api.v1.type_device.router import router as type_device_router
+from app.api.v1.status_device.router import router as status_device_router
+from app.api.v1.devices.router import router as device_router
+from app.api.v1.action_logs.router import router as action_log_router
 
 
 def create_app():
     app = FastAPI()
-    Base.metadata.create_all(bind=engine)
+    # Base.metadata.create_all(bind=engine)
 
     register_middleware(app)
     app.include_router(auth_router, prefix="/api/v1/auth", tags=["Auth"])

@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from models import Action
+from app.models import Action
 
 class ActionRepository:
     def __init__(self, db: Session):

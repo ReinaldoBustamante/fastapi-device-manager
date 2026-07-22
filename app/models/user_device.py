@@ -1,4 +1,4 @@
-from core.db import Base
+from app.core.db import Base
 from sqlalchemy import Table, Column, Integer, ForeignKey
 
 user_device = Table(

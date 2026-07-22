@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from models import User
+from app.models import User
 
 class AuthRepository:
     def __init__(self, db: Session):

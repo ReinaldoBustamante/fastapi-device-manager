@@ -1,6 +1,6 @@
 from .repository import ActionLogRepository
 from .schemas import ActionLogDTO
-from models import ActionLogs
+from app.models import ActionLogs
 class ActionLogService:
     def __init__(self, action_log_repository: ActionLogRepository):
         self.action_log_repository = action_log_repository

@@ -1,14 +1,14 @@
 
 
-from api.v1.users.repository import UserRepository
-from api.v1.action_logs.repository import ActionLogRepository
-from models import Device, ActionLogs
+from app.api.v1.users.repository import UserRepository
+from app.api.v1.action_logs.repository import ActionLogRepository
+from app.models import Device, ActionLogs
 from fastapi import HTTPException
 from .schemas import CreateDeviceDTO, UpdateStatusDeviceDTO, AssignDeviceDTO
 from .repository import DeviceRepository
-from api.v1.type_device.repository import TypeDeviceRepository
-from api.v1.status_device.repository import StatusDeviceRepository
-from core.enums import ActionType
+from app.api.v1.type_device.repository import TypeDeviceRepository
+from app.api.v1.status_device.repository import StatusDeviceRepository
+from app.core.enums import ActionType
 
 class DeviceService:
     def __init__(

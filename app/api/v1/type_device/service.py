@@ -1,6 +1,6 @@
 from .schemas import CreateTypeDeviceDTO
-from api.v1.type_device.repository import TypeDeviceRepository
-from models import TypeDevice
+from app.api.v1.type_device.repository import TypeDeviceRepository
+from app.models import TypeDevice
 from fastapi import HTTPException, status
 
 

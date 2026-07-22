@@ -1,11 +1,11 @@
-from core.security import require_admin
+from app.core.security import require_admin
 from typing import List
 from .service import StatusDeviceService
 from .repository import StatusDeviceRepository
 from .schemas import PublicStatusDevice, CreateStatusDeviceDTO
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
-from core.db import get_db
+from app.core.db import get_db
 
 router = APIRouter()
 

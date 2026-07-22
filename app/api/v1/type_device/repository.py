@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from models import TypeDevice
+from app.models import TypeDevice
 
 class TypeDeviceRepository:
     def __init__(self, db: Session):

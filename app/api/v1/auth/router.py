@@ -1,9 +1,9 @@
-from api.v1.roles.repository import RoleRepository
+from app.api.v1.roles.repository import RoleRepository
 from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from core.db import get_db
-from core.security import get_current_user
+from app.core.db import get_db
+from app.core.security import get_current_user
 from .schemas import LoginResponse, CreateUserDTO, RegisterResponse
 from .repository import AuthRepository
 from .service import AuthService

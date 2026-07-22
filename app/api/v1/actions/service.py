@@ -1,8 +1,8 @@
 
 from fastapi import HTTPException
-from api.v1.actions.schemas import CreateActionDTO
-from api.v1.actions.repository import ActionRepository
-from models import Action
+from app.api.v1.actions.schemas import CreateActionDTO
+from app.api.v1.actions.repository import ActionRepository
+from app.models import Action
 
 
 class ActionService:

@@ -1,11 +1,11 @@
-from core.security import require_admin
+from app.core.security import require_admin
 from typing import List
 from .repository import RoleRepository
 from .service import RoleServices
 from .schemes import CreateRoleDTO, RolePublicResponse
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from core.db import get_db
+from app.core.db import get_db
 
 router = APIRouter()
 def role_services(db: Session = Depends(get_db)):

@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from api.v1.users.repository import UserRepository
+from app.api.v1.users.repository import UserRepository
 
 class UserService:
     def __init__(self, user_repository: UserRepository):

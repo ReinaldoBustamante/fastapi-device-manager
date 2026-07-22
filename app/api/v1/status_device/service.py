@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from .repository import StatusDeviceRepository
 from .schemas import CreateStatusDeviceDTO
-from models import StatusDevice
+from app.models import StatusDevice
 
 class StatusDeviceService:
     def __init__(self, status_device_repository: StatusDeviceRepository):
