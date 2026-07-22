@@ -55,7 +55,7 @@ Copia el archivo de plantilla `.env.template` como `.env`:
 cp .env.template .env
 ```
 Abre el archivo `.env` y define los valores necesarios, por ejemplo:
-*   `DATABASE_URL=postgresql+psycopg://test:test@localhost:5432/postgres`
+*   `DATABASE_URL=postgresql+psycopg://test:test@db:5432/postgres`
 *   `SECRET_KEY` (Clave secreta segura para firmar los tokens JWT)
 *   Datos por defecto del administrador (`DEFAULT_ADMIN_EMAIL`, `DEFAULT_ADMIN_PASSWORD`, etc.)
 ### 3. Levantar la Base de Datos (PostgreSQL) con Docker
@@ -63,34 +63,16 @@ Inicia el contenedor de la base de datos PostgreSQL:
 ```bash
 docker-compose up -d
 ```
-### 4. Crear el Entorno Virtual e Instalar Dependencias
-Crea y activa un entorno virtual de Python, luego instala las dependencias:
+### 4. Ejecutar las migraciones con alembic
 ```bash
-# Crear entorno virtual
-python -m venv .venv
-# Activar entorno virtual
-# En Windows (PowerShell):
-.venv\Scripts\Activate.ps1
-# En Linux/macOS:
-source .venv/bin/activate
-# Instalar dependencias
-pip install -r requirements.txt
-```
-### 5. Ejecutar las migraciones con alembic
-```bash
-alembic upgrade head
+docker compose exec web alembic upgrade head
 ```
 ### 6. Ejecutar las Semillas (*Seeds*)
 Inserta los datos iniciales obligatorios y el usuario administrador en la base de datos:
 ```bash
-python -m app.seeds
+docker compose exec web python -m app.seeds
 ```
 
-## Ejecucion de la aplicación
-Para iniciar el servidor de desarrollo local con recarga automática:
-```bash
-uvicorn app.main:app --reload
-```
 El servidor estará corriendo en: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ## Documentacion
