@@ -28,6 +28,6 @@ class ActionService:
     def delete_action(self, action_id: int ):
         action = self.get_action_by_id(action_id)
         if len(action.action_logs) > 0:
-            raise HTTPException(status_code=400, detail="Action has logs")
+            raise HTTPException(status_code=409, detail="Action has logs")
 
         return self.action_repository.delete_action(action)
