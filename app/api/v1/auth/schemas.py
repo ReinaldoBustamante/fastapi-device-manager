@@ -7,7 +7,6 @@ class CreateUserDTO(BaseModel):
     last_name: str
     email: str
     password: str
-    birth_date: date
     role_id: int
     
 class LoginResponse(BaseModel):
@@ -18,7 +17,6 @@ class RegisterResponse(BaseModel):
     first_name: str
     last_name: str
     email: str
-    birth_date: date
     role_id: int
 
     model_config = ConfigDict(from_attributes=True)
