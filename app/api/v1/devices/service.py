@@ -57,7 +57,7 @@ class DeviceService:
         return device
 
     def update_status_device(self, device_id: int, update_status_device_dto: UpdateStatusDeviceDTO, current_user):
-        updates = {"status_id": update_status_device_dto.status_id}
+        updates = update_status_device_dto.model_dump(exclude_unset=True)
         device = self.device_repository.get_device_by_id(device_id)
         if not device:
             raise HTTPException(status_code=404, detail="Device not found")
@@ -71,8 +71,9 @@ class DeviceService:
         action = ActionLogs(
             action_id= ActionType.UPDATE_DEVICE,
             user_id=current_user.get('id'),
-            device_id=device.id,    
+            device_id=device_id,    
         )
+
         self.action_log_repository.add_action_log(action)
         
         return device
@@ -91,7 +92,7 @@ class DeviceService:
         action = ActionLogs(
             action_id= ActionType.ASSIGN_DEVICE,
             user_id=current_user.get('id'),
-            device_id=device.id,    
+            device_id=device_id,    
         )
         self.action_log_repository.add_action_log(action)
         
