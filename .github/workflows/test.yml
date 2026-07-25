@@ -11,20 +11,20 @@ jobs:
   tests:
     runs-on: ubuntu-22.04
     steps:
-      - name: clone repository
+      - name: Clone Repository
         uses: actions/checkout@v5
 
-      - name: configure python
+      - name: Configure Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
-      - name: install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Ejecutar tests
+      - name: Run Tests
         run: |
           pytest
   
