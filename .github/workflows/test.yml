@@ -3,7 +3,10 @@ name: tests
 on: 
   push:
     branches: [ main ]
-
+    
+env:
+  DATABASE_URL: sqlite:///./test.db
+  
 jobs:
   tests:
     runs-on: ubuntu-22.04
