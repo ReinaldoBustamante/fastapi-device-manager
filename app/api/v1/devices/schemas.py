@@ -45,8 +45,17 @@ class PaginationResponse(BaseModel):
     limit: int
     offset:int
 
+class StatsDeviceResponse(BaseModel):
+    total: int
+    available: int
+    assigned: int
+    in_repair: int
+    losts: int
+    retired: int
+
 class DeviceResumeListResponse(BaseModel):
     devices: List[PublicDeviceResume]
+    stats: StatsDeviceResponse
     pagination: PaginationResponse    
 
 class CreateDeviceDTO(BaseModel):
