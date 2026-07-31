@@ -9,7 +9,7 @@ from app.api.v1.type_device.router import router as type_device_router
 from app.api.v1.status_device.router import router as status_device_router
 from app.api.v1.devices.router import router as device_router
 from app.api.v1.action_logs.router import router as action_log_router
-
+from app.api.v1.dashbaord.router import router as dashboard_router
 
 def create_app():
     app = FastAPI()
@@ -24,6 +24,7 @@ def create_app():
     app.include_router(type_device_router, prefix="/api/v1/type_devices", tags=["Type Devices"])
     app.include_router(status_device_router, prefix="/api/v1/status_devices", tags=["Status Devices"])
     app.include_router(action_log_router, prefix="/api/v1/action_logs", tags=["Action Logs"])
+    app.include_router(dashboard_router, prefix="/api/v1/dashboard", tags=["Dashboard"])
     
     return app
 
