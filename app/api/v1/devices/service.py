@@ -1,14 +1,16 @@
 
 
+from app.api.v1.devices.schemas import CreateDeviceDTO
 from app.api.v1.users.repository import UserRepository
 from app.api.v1.action_logs.repository import ActionLogRepository
-from app.models import Device, ActionLogs
+from app.models import ActionLogs
 from fastapi import HTTPException
-from .schemas import CreateDeviceDTO, UpdateStatusDeviceDTO, AssignDeviceDTO
+from .schemas import UpdateStatusDeviceDTO, AssignDeviceDTO
 from .repository import DeviceRepository
 from app.api.v1.type_device.repository import TypeDeviceRepository
 from app.api.v1.status_device.repository import StatusDeviceRepository
 from app.core.enums import ActionType
+from app.models import Device
 
 class DeviceService:
     def __init__(
@@ -25,33 +27,44 @@ class DeviceService:
         self.action_log_repository = action_log_repository
         self.user_repository = user_repository
     
-    def get_all_device(self, limit: int, offset: int):
-        return self.device_repository.get_all_device(limit, offset)
+    def get_all_devices(self, status_id: int | None, search: str | None, limit: int, offset: int):
+        result, total = self.device_repository.get_all_devices(status_id, search, limit, offset)
+        return {
+            "devices": result,
+            "pagination": {
+                "limit": limit,
+                "offset": offset,
+                "total": total
+            }
+        }
+
+    def get_device_by_id(self, device_id):
+        result = self.device_repository.get_device_by_id(device_id)
+        if result is None:
+            raise HTTPException(status_code=404, detail="Device not found")
+        return result
 
     def create_device(self, create_device_dto: CreateDeviceDTO, current_user):
-        device_exist = self.device_repository.get_device_by_serial_number(create_device_dto.serial_number)
-        if device_exist:
-            raise HTTPException(status_code=409, detail="Device already exists")
-        
-        status_device = self.status_device_repository.get_status_device_by_id(create_device_dto.status_id)
-        if not status_device:
+        serial_number = self.device_repository.get_device_by_serial_number(create_device_dto.serial_number)
+        if serial_number:
+            raise HTTPException(status_code=409, detail="Serial number already exists")
+        status_id = self.status_device_repository.get_status_device_by_id(create_device_dto.status_id)
+        if not status_id:
             raise HTTPException(status_code=404, detail="Status device not found")
-        
-        type_device = self.type_device_repository.get_type_device_by_id(create_device_dto.type_id)
-        if not type_device:
+        type_id = self.type_device_repository.get_type_device_by_id(create_device_dto.type_id)
+        if not type_id:
             raise HTTPException(status_code=404, detail="Type device not found")
-        
+
         device = Device(**create_device_dto.model_dump())
-        self.device_repository.create_device(device)
-        
+        result = self.device_repository.create_device(device)
         action = ActionLogs(
             action_id= ActionType.CREATE_DEVICE,
             user_id=current_user.get('id'),
-            device_id=device.id,    
+            device_id=result.id,
         )
-
         self.action_log_repository.add_action_log(action)
-        return device
+        return result
+        
 
     def update_status_device(self, device_id: int, update_status_device_dto: UpdateStatusDeviceDTO, current_user):
         updates = update_status_device_dto.model_dump(exclude_unset=True)
@@ -73,7 +86,7 @@ class DeviceService:
 
         self.action_log_repository.add_action_log(action)
         
-        return device
+        return "Device status updated successfully"
     
     def assign_device(self, device_id: int, assign_device_dto: AssignDeviceDTO, current_user):
         device = self.device_repository.get_device_by_id(device_id)
@@ -93,6 +106,4 @@ class DeviceService:
         )
         self.action_log_repository.add_action_log(action)
         
-        return device
-
-   
+        return "Device assigned successfully"

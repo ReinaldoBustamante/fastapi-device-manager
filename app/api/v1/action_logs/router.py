@@ -1,3 +1,4 @@
+from app.api.v1.action_logs.schemas import ActionLogsListResponse
 from app.core.security import require_admin
 from app.api.v1.action_logs.service import ActionLogService
 from app.api.v1.action_logs.repository import ActionLogRepository
@@ -11,8 +12,7 @@ def action_log_service(db: Session = Depends(get_db)):
     action_log_repository = ActionLogRepository(db)
     return ActionLogService(action_log_repository)
 
-
-@router.get('/')
+@router.get('/', response_model=ActionLogsListResponse)
 def get_action_logs(
     offset: int = 0, 
     limit: int = 10, 

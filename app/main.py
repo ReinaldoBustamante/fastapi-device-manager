@@ -9,7 +9,7 @@ from app.api.v1.type_device.router import router as type_device_router
 from app.api.v1.status_device.router import router as status_device_router
 from app.api.v1.devices.router import router as device_router
 from app.api.v1.action_logs.router import router as action_log_router
-from app.api.v1.dashbaord.router import router as dashboard_router
+from app.api.v1.dashboard.router import router as dashboard_router
 
 def create_app():
     app = FastAPI()
@@ -17,14 +17,14 @@ def create_app():
 
     register_middleware(app)
     app.include_router(auth_router, prefix="/api/v1/auth", tags=["Auth"])
-    app.include_router(action_router, prefix="/api/v1/actions", tags=["Actions"])
-    app.include_router(role_router, prefix="/api/v1/roles", tags=["Roles"])
     app.include_router(user_router, prefix="/api/v1/users", tags=["Users"])
+    app.include_router(role_router, prefix="/api/v1/roles", tags=["Roles"])
     app.include_router(device_router, prefix="/api/v1/devices", tags=["Devices"])
     app.include_router(type_device_router, prefix="/api/v1/type_devices", tags=["Type Devices"])
     app.include_router(status_device_router, prefix="/api/v1/status_devices", tags=["Status Devices"])
-    app.include_router(action_log_router, prefix="/api/v1/action_logs", tags=["Action Logs"])
     app.include_router(dashboard_router, prefix="/api/v1/dashboard", tags=["Dashboard"])
+    app.include_router(action_router, prefix="/api/v1/actions", tags=["Actions"])
+    app.include_router(action_log_router, prefix="/api/v1/action_logs", tags=["Action Logs"])
     
     return app
 

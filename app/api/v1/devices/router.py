@@ -1,8 +1,8 @@
-from app.api.v1.devices.schemas import DeviceResumeListResponse
+from app.api.v1.devices.schemas import CreateDeviceDTO
+from fastapi import status
 from app.api.v1.users.repository import UserRepository
-from app.api.v1.devices.schemas import AssignDeviceDTO
 from app.api.v1.action_logs.repository import ActionLogRepository
-from .schemas import CreateDeviceDTO, DeviceResponse, UpdateStatusDeviceDTO
+from .schemas import DeviceResponse, UpdateStatusDeviceDTO, DeviceListResponse, AssignDeviceDTO
 from .service import DeviceService
 from .repository import DeviceRepository
 from app.core.db import get_db
@@ -22,15 +22,32 @@ def device_service(db: Session = Depends(get_db)):
 
 router = APIRouter()
 
-@router.get('/')
-def get_all_device(limit: int = 10, offset: int = 0, device_service: DeviceService = Depends(device_service)):
-    return device_service.get_all_device(limit, offset)
+@router.get('/', response_model=DeviceListResponse)
+def get_devices(
+    status_id: int | None = None, 
+    search: str | None = None,
+    limit: int = 10,
+    offset: int = 0,
+    device_service: DeviceService = Depends(device_service)
+):
+    return device_service.get_all_devices(status_id, search, limit, offset)
 
-@router.post('/', response_model=DeviceResponse)
-def create_device(create_device_dto: CreateDeviceDTO, device_service: DeviceService = Depends(device_service), current_user = Depends(require_admin)):
+@router.get('/{device_id}', response_model=DeviceResponse)
+def get_device_by_id(
+    device_id: int,
+    device_service: DeviceService = Depends(device_service)
+):
+    return device_service.get_device_by_id(device_id)
+
+@router.post('/', response_model=DeviceResponse, status_code=status.HTTP_201_CREATED)
+def create_device(
+    create_device_dto: CreateDeviceDTO, 
+    device_service: DeviceService = Depends(device_service),
+    current_user = Depends(require_admin)
+):
     return device_service.create_device(create_device_dto, current_user)
 
-@router.put('/{device_id}/status', response_model=DeviceResponse)
+@router.patch('/{device_id}/status')
 def update_status_device(
     device_id: int, 
     updates_status_device_dto: UpdateStatusDeviceDTO, 
@@ -39,7 +56,7 @@ def update_status_device(
 ):
     return device_service.update_status_device(device_id, updates_status_device_dto, current_user)
 
-@router.put('/{device_id}/assign')
+@router.patch('/{device_id}/assign')
 def assign_device(
     device_id: int,
     assign_device_dto: AssignDeviceDTO,

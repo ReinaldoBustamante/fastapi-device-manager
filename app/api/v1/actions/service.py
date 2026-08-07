@@ -1,8 +1,6 @@
 
 from fastapi import HTTPException
-from app.api.v1.actions.schemas import CreateActionDTO
 from app.api.v1.actions.repository import ActionRepository
-from app.models import Action
 
 
 class ActionService:
@@ -17,17 +15,3 @@ class ActionService:
         if action is None:
             raise HTTPException(status_code=404, detail="Action not found")
         return action
-
-    def create_action(self, actionDTO: CreateActionDTO):
-        action_exist = self.action_repository.get_action_by_name(actionDTO.name)
-        if action_exist:
-            raise HTTPException(status_code=409, detail=f"Action {actionDTO.name} already exists")
-        action = Action(**actionDTO.model_dump())
-        return self.action_repository.create_action(action)
-    
-    def delete_action(self, action_id: int ):
-        action = self.get_action_by_id(action_id)
-        if len(action.action_logs) > 0:
-            raise HTTPException(status_code=409, detail="Action has logs")
-
-        return self.action_repository.delete_action(action)

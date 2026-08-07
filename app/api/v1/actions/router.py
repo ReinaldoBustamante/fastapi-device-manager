@@ -1,5 +1,4 @@
-from app.core.security import require_admin
-from app.api.v1.actions.schemas import CreateActionDTO, ActionResponse
+from app.api.v1.actions.schemas import ActionResponse
 from app.api.v1.actions.service import ActionService
 from app.api.v1.actions.repository import ActionRepository
 from sqlalchemy.orm import Session
@@ -17,18 +16,6 @@ def action_service(db: Session = Depends(get_db)):
 def get_all_actions(action_service: ActionService = Depends(action_service)):
     return action_service.get_all_actions()
 
-@router.post('/', response_model=ActionResponse)
-def create_action(
-    action: CreateActionDTO, 
-    action_service: ActionService = Depends(action_service), 
-    _: dict = Depends(require_admin)
-):
-    return action_service.create_action(action)
-
-@router.delete('/{action_id}', response_model=ActionResponse)
-def delete_action(
-    action_id: int, 
-    action_service: ActionService = Depends(action_service),
-    _: dict = Depends(require_admin)
-):
-    return action_service.delete_action(action_id)
+@router.get('/{action_id}', response_model=ActionResponse)
+def get_action_by_id(action_id: int, action_service = Depends(action_service)):
+    return action_service.get_action_by_id(action_id)

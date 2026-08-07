@@ -14,18 +14,4 @@ class ActionRepository:
         stmt = select(Action).where(Action.id == action_id)
         return self.db.scalars(stmt).first()
 
-    def get_action_by_name(self, action_name: str):
-        stmt = select(Action).where(Action.name == action_name)
-        return self.db.scalars(stmt).first()
-
-    def create_action(self, action: Action):
-        self.db.add(action)
-        self.db.flush()
-        return action
-    
-    def delete_action(self, action: Action):
-        self.db.delete(action)
-        self.db.flush()
-        return action
-
     

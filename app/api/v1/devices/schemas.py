@@ -1,5 +1,4 @@
-from typing import List
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, ConfigDict
 from datetime import date, datetime
 
@@ -14,49 +13,24 @@ class DeviceResponse(BaseModel):
     user_id: Optional[int] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
-    model_config = ConfigDict(from_attributes=True)
 
-class TypeDeviceResponse(BaseModel):
-    id: int
-    name: str
-
-class StatusDeviceResponse(BaseModel):
-    id: int
-    name: str
-
-class UserResponse(BaseModel):
-    id: int
-    first_name: str
-    last_name: str
-
-class PublicDeviceResume(BaseModel):
-    id: int
-    serial_number: str
-    brand: str
-    model: str
-    buy_date: date
-    type: TypeDeviceResponse
-    status: StatusDeviceResponse
-    user: Optional[UserResponse] = None
     model_config = ConfigDict(from_attributes=True)
 
 class PaginationResponse(BaseModel):
     total: int
     limit: int
-    offset:int
+    offset: int
 
-class StatsDeviceResponse(BaseModel):
-    total: int
-    available: int
-    assigned: int
-    in_repair: int
-    losts: int
-    retired: int
+class DeviceListResponse(BaseModel):
+    devices: List[DeviceResponse]
+    pagination: PaginationResponse
 
-class DeviceResumeListResponse(BaseModel):
-    devices: List[PublicDeviceResume]
-    stats: StatsDeviceResponse
-    pagination: PaginationResponse    
+
+class AssignDeviceDTO(BaseModel):
+    user_id: int
+
+class UpdateStatusDeviceDTO(BaseModel):
+    status_id: int
 
 class CreateDeviceDTO(BaseModel):
     serial_number: str
@@ -65,9 +39,3 @@ class CreateDeviceDTO(BaseModel):
     buy_date: date
     status_id: int
     type_id: int
-
-class UpdateStatusDeviceDTO(BaseModel):
-    status_id: int
-
-class AssignDeviceDTO(BaseModel):
-    user_id: int

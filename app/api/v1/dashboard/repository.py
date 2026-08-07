@@ -1,7 +1,7 @@
 
 from app.models import Device
 from sqlalchemy import func
-from sqlalchemy import select, or_
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 class DashboardRepository:
@@ -25,20 +25,3 @@ class DashboardRepository:
             "retired": retired
         }
     
-    def get_devices(self, status_id: int | None, search: str | None, limit: int, offset: int):
-        query = select(Device)
-        if status_id:
-            query = query.where(Device.status_id == status_id)
-        if search:
-            query = query.where(or_(
-                Device.brand.ilike(f"%{search}%"),
-                Device.model.ilike(f"%{search}%"),
-                Device.serial_number.ilike(f"%{search}%"),
-            ))
-        total = self.db.scalar(select(func.count()).select_from(query.subquery()))
-        query = query.limit(limit).offset(offset)
-        result = self.db.scalars(query).all()
-        
-        return result, total
-
-        

@@ -1,10 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class CreateRoleDTO(BaseModel):
-    name: str
-    description: str
-
 class RolePublicResponse(BaseModel):
     id: int
     name: str

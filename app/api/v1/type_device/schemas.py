@@ -1,11 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 
-
-class CreateTypeDeviceDTO(BaseModel):
-    name: str
-
-
-class PublicTypeDevice(BaseModel):
+class TypeDeviceResponse(BaseModel):
     id: int
     name: str
 

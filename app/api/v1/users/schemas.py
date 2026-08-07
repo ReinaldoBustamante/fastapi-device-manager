@@ -1,13 +1,11 @@
-from typing import Optional, List
-from pydantic import BaseModel, ConfigDict
+from typing import List
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
-class UpdateUserDTO(BaseModel):
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    password: Optional[str] = None
-    is_active: Optional[bool] = None
-    role_id: Optional[int] = None
-
+class CreateUserDTO(BaseModel):
+    first_name: str
+    last_name: str
+    email: EmailStr
+    password: str = Field(..., min_length=8, description="Mínimo 8 caracteres")
 
 class UserResponse(BaseModel):
     id: int
@@ -16,7 +14,6 @@ class UserResponse(BaseModel):
     email: str
     is_active: bool
     role_id: int
-
     model_config = ConfigDict(from_attributes=True)
 
 class PaginationResponse(BaseModel):

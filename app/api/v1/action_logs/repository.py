@@ -12,18 +12,11 @@ class ActionLogRepository:
         return action_log
     
     def get_action_logs(self, offset: int, limit: int):
-        stmt = select(ActionLogs).limit(limit).offset(offset)
-        logs = self.db.scalars(stmt).all()
+        query= select(ActionLogs).limit(limit).offset(offset)
+        result = self.db.scalars(query).all()
 
         total = self.db.scalar(
             select(func.count()).select_from(ActionLogs)
         )
 
-        return {
-            "data": logs,
-            "pagination": {
-                "total": total,
-                "offset": offset,
-                "limit": limit
-            }
-        }
+        return result, total

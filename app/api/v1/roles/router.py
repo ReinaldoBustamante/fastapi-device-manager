@@ -1,8 +1,7 @@
-from app.core.security import require_admin
 from typing import List
 from .repository import RoleRepository
 from .service import RoleServices
-from .schemes import CreateRoleDTO, RolePublicResponse
+from .schemas import RolePublicResponse
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.core.db import get_db
@@ -18,18 +17,6 @@ def get_all_roles(
 ):
     return role_service.get_all()
 
-@router.post('/', response_model=RolePublicResponse)
-def create_role(
-    roleDTO: CreateRoleDTO, 
-    role_service: RoleServices = Depends(role_services),
-    _: dict = Depends(require_admin)
-):
-    return role_service.create(roleDTO)
-
-@router.delete('/{role_id}', response_model=RolePublicResponse)
-def delete_role(
-    role_id: int,
-    role_service: RoleServices = Depends(role_services),
-    _: dict = Depends(require_admin)
-):
-    return role_service.delete(role_id)
+@router.get('/{role_id}', response_model=RolePublicResponse)
+def get_role_by_id(role_id: int, role_services = Depends(role_services)):
+    return role_services.get_by_id(role_id)
